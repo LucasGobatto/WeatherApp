@@ -1,49 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-export interface FetchResult {
-  title: string;
-  location_type: string;
-  woied: number; //Where On Earth ID
-  latt_long: string;
-}
+import {
+  FetchResult,
+  RequestByName,
+  RequestByLattAndLong,
+} from "../services/api-requests";
 
 export const ServicesTestsPage: React.FC = () => {
-  const [location, setLocation] = useState("");
+  const [text, setText] = useState("");
   const [data, setData] = useState<FetchResult[]>([]);
 
+  //get client's current localization
   useEffect(() => {
-    if (location) {
-      const APILink = `http://www.metaweather.com/api/location/search/?query=${location}`;
-      const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
-      fetch(corsAnywhere + APILink)
-        .then((result) => {
-          result
-            .json()
-            .then((res) => {
-              setData(res);
-            })
-            .catch((error) => {
-              console.log("JSON Error:", error);
-            });
-        })
-        .catch((error) => {
-          console.log("Error:", error);
-        });
+    async function getCurrentLocalization() {
+      const response = await RequestByLattAndLong();
+      if (response) {
+        setData(response);
+      }
     }
-  }, [location]);
+    getCurrentLocalization();
+  }, []);
+
+  //get searched city
+  function handleClick() {
+    async function makeRequest() {
+      if (text || true) {
+        const response = await RequestByName({ location: text });
+        if (response) {
+          setData(response);
+        }
+      }
+    }
+    makeRequest();
+  }
 
   return (
     <div>
       <h1>Services Tests Page</h1>
-      <input
-        type="text"
-        onChange={(text: React.ChangeEvent<HTMLInputElement>) => {
-          setLocation(text.target.value);
-        }}
-      />
+      <div className="forms-by-name">
+        <p>Search by City Name</p>
+        <input
+          type="text"
+          onChange={(text: React.ChangeEvent<HTMLInputElement>) => {
+            setText(text.target.value);
+          }}
+        />
+        <button onClick={handleClick}>Search</button>
+      </div>
       <p>{"Search Results: "}</p>
       {data.map((location: FetchResult) => (
-        <p key={location.woied}>{location.title}</p>
+        <p key={location.title + location.woied}>{location.title}</p>
       ))}
     </div>
   );
