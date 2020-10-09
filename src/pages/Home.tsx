@@ -3,6 +3,7 @@ import { InitalHomePage } from '../components/Loading';
 import { useWeather } from '../hooks/WeatherHook';
 import { useLoading } from '../hooks/LoadingHook';
 import { requestByLattAndLong } from '../services/api.requests';
+import { Container } from './styles';
 
 const Home: React.FC = ({ children }) => {
 	const { climate, getClimate } = useWeather();
@@ -24,13 +25,13 @@ const Home: React.FC = ({ children }) => {
 
 	if (!climate) {
 		return (
-			<div style={{ display: 'flex', position: 'relative' }}>
+			<Container>
 				<InitalHomePage />
-			</div>
+			</Container>
 		);
 	}
 
-	return <div style={{ display: 'flex' }}>{children}</div>;
+	return <Container>{children}</Container>;
 };
 
 export default Home;

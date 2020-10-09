@@ -7,6 +7,10 @@ export { Container } from '../Overview/styles';
 
 export const InitialSidebar = styled(Sidebar)`
 	width: 400px;
+
+	@media only screen and (max-width: 825px) {
+		width: 100%;
+	}
 `;
 
 export const Magnify = styled(GiMagnifyingGlass)`

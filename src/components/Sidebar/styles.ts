@@ -3,8 +3,7 @@ import styled from 'styled-components';
 export const Sidebar = styled.div`
 	color: #fff;
 	background-color: #1e213a;
-	min-width: 400px;
-	max-width: 459px;
+	width: 459px;
 	min-height: 100vh;
 	padding: 40px;
 	display: flex;
@@ -13,12 +12,19 @@ export const Sidebar = styled.div`
 	h1 {
 		color: #a09fb1;
 	}
+
+	@media only screen and (max-width: 825px) {
+		width: 100%;
+		align-items: center;
+		height: 810px;
+	}
 `;
 
 export const ButtonContainer = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	width: 100%;
 `;
 
 export const Button = styled.button`
