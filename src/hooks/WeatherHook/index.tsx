@@ -53,7 +53,6 @@ export const WeatherProvider: React.FC = ({ children }) => {
 	const getClimate = useCallback(
 		async (woeid: number) => {
 			const result = await climateCityDetails(woeid);
-			console.log('The requistion is done! The result is:', result);
 			setClimate(addFahrenheitTemps(result));
 		},
 		[addFahrenheitTemps],
