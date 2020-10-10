@@ -24,7 +24,7 @@ const Home: React.FC = ({ children }) => {
 
 	if (!climate) {
 		return (
-			<div style={{ display: 'flex' }}>
+			<div style={{ display: 'flex', position: 'relative' }}>
 				<InitalHomePage />
 			</div>
 		);

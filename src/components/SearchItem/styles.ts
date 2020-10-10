@@ -5,10 +5,10 @@ export const SidebarSearch = styled.div`
 	top: 0;
 	left: 0;
 	color: #fff;
-	background-color: #222642;
+	background-color: #1e21af;
 	min-width: 400px;
 	max-width: 459px;
-	height: 100vh;
+	min-height: 100vh;
 	padding: 20px 40px;
 	display: flex;
 	flex-direction: column;
@@ -39,7 +39,7 @@ export const SearchContainer = styled(Container)`
 export const ResultsContainer = styled(Container)`
 	flex-direction: column;
 	justify-content: flex-start;
-	overflow-y: scroll;
+	overflow-y: auto;
 `;
 
 export const ExitButton = styled.button`
