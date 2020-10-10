@@ -36,12 +36,6 @@ export const SearchContainer = styled(Container)`
 	margin-bottom: 48px;
 `;
 
-export const ResultsContainer = styled(Container)`
-	flex-direction: column;
-	justify-content: flex-start;
-	overflow-y: scroll;
-`;
-
 export const ExitButton = styled.button`
 	width: 10%;
 	color: #e7e7eb;
@@ -81,29 +75,4 @@ export const SearchButton = styled.button`
 	border: none;
 	outline: 0;
 	background-color: #3c47e9;
-`;
-
-export const Result = styled.button`
-	color: #616475;
-	width: 100%;
-	display: flex;
-	background: none;
-	justify-content: space-between;
-	align-items: center;
-	padding: 20px 10px;
-	box-sizing: border-box;
-	border: 1px solid #1e213a;
-	margin-bottom: 24px;
-	&:hover {
-		border: 1px solid #616475;
-		svg {
-			visibility: initial;
-		}
-	}
-	h1 {
-		font-size: 16px;
-	}
-	svg {
-		visibility: hidden;
-	}
 `;
