@@ -14,6 +14,11 @@ export const Container = styled.div`
 	background: #100e1d;
 	padding: 16px;
 	position: relative;
+
+	@media only screen and (max-width: 768px) {
+		width: 100%;
+		height: 810px;
+	}
 `;
 
 export const ContentContainer = styled.div`
@@ -48,11 +53,17 @@ export const WeekContainer = styled.div`
 	display: grid;
 	grid-column-gap: 26px;
 	grid-row-gap: 32px;
-	grid-template-columns: auto auto;
+	grid-template-columns: repeat(2, 1fr);
 	justify-content: center;
 	margin-top: 36px;
 
-	@media only screen and (min-width: 768px) {
+	@media only screen and (min-width: 976px) {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-content: center;
+	}
+
+	@media only screen and (min-width: 1460px) {
 		display: flex;
 	}
 `;
@@ -64,6 +75,7 @@ export const DayCard = styled.div`
 	align-items: center;
 	background: #1e213a;
 	padding: 18px;
+	margin: auto;
 `;
 
 export const CardTitle = styled.span`
@@ -106,7 +118,7 @@ export const HighlightsGrid = styled.div`
 		font-weight: bold;
 	}
 
-	@media only screen and (min-width: 768px) {
+	@media only screen and (min-width: 1196px) {
 		display: grid;
 		grid-column-gap: 48px;
 		grid-row-gap: 0px;

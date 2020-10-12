@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { InitialSidebar, Label, Magnify, VSeparator, Container, Map } from './styled';
 import { ButtonContainer, Button } from '../Sidebar/styles';
 import { GpsButton } from '../GpsButton';
 import { useWeather } from '../../hooks/WeatherHook';
 import { useLoading } from '../../hooks/LoadingHook';
 import { Names } from '../Overview/styles';
+import SidebarSearch from '../SidebarSearch';
 
 export const OverviewOnLoad: React.FC = () => {
 	return (
@@ -34,11 +36,21 @@ const OverviewNotOnLoad: React.FC = () => {
 export const InitalHomePage: React.FC = () => {
 	const { getClimate } = useWeather();
 	const { isLoading } = useLoading();
+	const [status, setStatus] = useState(false);
+
 	return (
 		<>
 			<InitialSidebar>
+				<ReactCSSTransitionGroup
+					component={React.Fragment}
+					transitionName='slider'
+					transitionEnterTimeout={1000}
+					transitionLeaveTimeout={1000}
+				>
+					{status && <SidebarSearch updateState={setStatus} />}
+				</ReactCSSTransitionGroup>
 				<ButtonContainer>
-					<Button>Search for places</Button>
+					<Button onClick={() => setStatus(true)}>Search for places</Button>
 					<GpsButton onTap={getClimate} />
 				</ButtonContainer>
 				<VSeparator />
