@@ -1,19 +1,24 @@
 import React from 'react';
-import Sidebar from './components/sidebar/Sidebar';
+import Sidebar from './components/Sidebar';
+// import SidebarSearch from './components/SidebarSearch';
 import GlobalStyle from './styles/global';
 import './styles/app.css';
+
+import Home from './pages/Home';
+
+import AppProvider from './hooks';
 
 import Overview from './components/Overview';
 
 const App: React.FC = () => {
 	return (
-		<div>
+		<AppProvider>
 			<GlobalStyle />
-			<div style={{ display: 'flex' }}>
+			<Home>
 				<Sidebar />
 				<Overview />
-			</div>
-		</div>
+			</Home>
+		</AppProvider>
 	);
 };
 

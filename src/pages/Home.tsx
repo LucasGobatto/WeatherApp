@@ -1,31 +1,20 @@
-import React from "react";
+import React from 'react';
+import { InitalHomePage } from '../components/Loading';
+import { useWeather } from '../hooks/WeatherHook';
+import { Container } from './styles';
 
-interface Weather {
-  info: {
-    tempMax: number;
-    tempMin: number;
-    type: "Cloudy" | "Clear";
-    isEndOfWorld?: boolean;
-  };
-}
+const Home: React.FC = ({ children }) => {
+	const { climate } = useWeather();
 
-const Weather: React.FC<Weather> = ({ info }) => {
-  return (
-    <div>
-      <p>{info.type}</p>
-    </div>
-  );
+	if (!climate) {
+		return (
+			<Container>
+				<InitalHomePage />
+			</Container>
+		);
+	}
+
+	return <Container>{children}</Container>;
 };
 
-export const HomePage: React.FC = () => {
-  return (
-    <Weather
-      info={{
-        tempMax: 39.4,
-        tempMin: 32.6,
-        type: "Cloudy",
-        isEndOfWorld: true,
-      }}
-    />
-  );
-};
+export default Home;

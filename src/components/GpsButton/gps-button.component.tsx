@@ -1,20 +1,23 @@
-import * as React from 'react';
-import { climateCityDetails, requestByLattAndLong } from '../../services/api.requests';
-import { ClimateDetails } from '../../services/services.interface';
+import React from 'react';
+import { requestByLattAndLong } from '../../services/api.requests';
 import { GpsButtonStyled } from './gps-button.component.styled';
 import { GpsIcon } from '../../assets/icons/GpsIcon';
+import { useLoading } from '../../hooks/LoadingHook';
 
 interface GpsButtonProps {
-	onTap: (value: ClimateDetails) => void;
+	onTap(woeid: number): void;
 }
 
 export const GpsButton: React.FC<GpsButtonProps> = (props) => {
+	const { setLoading } = useLoading();
+
 	const handleRequest = async (): Promise<void> => {
+		setLoading(true);
 		const nearstCities = await requestByLattAndLong();
 		if (nearstCities.length > 0) {
-			const currentWeather = await climateCityDetails(nearstCities[0].woeid);
-			props.onTap(currentWeather || []);
+			props.onTap(nearstCities[0].woeid);
 		}
+		setLoading(false);
 	};
 
 	return (

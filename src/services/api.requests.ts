@@ -34,7 +34,6 @@ export async function requestByLattAndLong(): Promise<PlacesList[]> {
 		const APILink = `http://www.metaweather.com/api/location/search/?lattlong=${localization}`;
 		return await makeRequest(APILink);
 	} catch (error) {
-		alert(`Localization not found: ${error}`);
 		return [];
 	}
 }
