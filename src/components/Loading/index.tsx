@@ -14,8 +14,8 @@ export const OverviewOnLoad: React.FC = () => {
 			<img
 				alt='loading'
 				src='https://68.media.tumblr.com/348df0120e07cd7f14d5a394f86400de/tumblr_ootetnYTap1uoh1aio4_400.gif'
+				style={{ height: '69px', width: '69px', margin: '24px' }} // nice
 			/>
-			<VSeparator />
 			<Label>Loading...</Label>
 			<Names>Gabriel Fiali, Lucas Gobatto, Rodrigo Mayer @ DevChallenges.io</Names>
 		</Container>

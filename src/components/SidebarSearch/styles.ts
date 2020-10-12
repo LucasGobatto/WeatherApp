@@ -6,8 +6,7 @@ export const SidebarSearch = styled.div`
 	left: 0;
 	color: #fff;
 	background-color: #222642;
-	min-width: 400px;
-	max-width: 459px;
+	width: 459px;
 	height: 100vh;
 	padding: 20px 40px;
 	display: flex;
@@ -16,12 +15,21 @@ export const SidebarSearch = styled.div`
 	h1 {
 		color: #a09fb1;
 	}
+
+	@media only screen and (max-width: 825px) {
+		width: 100%;
+		align-items: center;
+	}
 `;
 
 export const Container = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
+	@media only screen and (max-width: 825px) {
+		width: 500px;
+	}
 `;
 
 export const ExitContainer = styled(Container)`
@@ -65,6 +73,10 @@ export const Searchbar = styled.div`
 		background: none;
 		border: none;
 		outline: 0;
+	}
+
+	@media only screen and (max-width: 825px) {
+		width: 80%;
 	}
 `;
 
