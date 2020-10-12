@@ -1,1 +1,0 @@
-{"version":3,"sources":["app.css"],"names":[],"mappings":"AAAA,iBACC,YACD,CAEA,yCACC,iBACC,aACD,CACD","file":"main.8bdf159c.chunk.css","sourcesContent":[".fialisContainer {\n\tdisplay: none;\n}\n\n@media only screen and (min-width: 768px) {\n\t.fialisContainer {\n\t\tdisplay: block;\n\t}\n}\n"]}
