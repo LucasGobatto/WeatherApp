@@ -6,6 +6,7 @@ import * as Styles from './styles';
 import SearchItem from '../SearchItem/index';
 
 import { requestByName } from '../../services/api.requests';
+import { PlacesList } from '../../services/services.interface';
 
 interface SidebarSearchProps {
 	updateState(status: boolean): void;
@@ -13,7 +14,7 @@ interface SidebarSearchProps {
 
 const SidebarSearch: React.FC<SidebarSearchProps> = ({ updateState }) => {
 	const [searchInput, setSearchInput] = useState<string>('');
-	const [results, setResults] = useState<Record<any, any>[]>([]);
+	const [results, setResults] = useState<PlacesList[]>([]);
 
 	function handleClose(): void {
 		setSearchInput('');
@@ -22,13 +23,9 @@ const SidebarSearch: React.FC<SidebarSearchProps> = ({ updateState }) => {
 		updateState(false);
 	}
 
-	async function handleSearch(): Promise<any> {
+	async function handleSearch(): Promise<void> {
 		const data = await requestByName({ name: searchInput });
-		const aux: Record<any, any>[] = [];
-		data.forEach((result) => {
-			aux.push(result);
-		});
-		setResults(aux);
+		setResults(data);
 	}
 
 	return (

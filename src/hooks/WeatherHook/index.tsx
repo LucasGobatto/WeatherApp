@@ -1,20 +1,27 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, { createContext, useCallback, useState, useContext, useEffect } from 'react';
 import { climateCityDetails } from '../../services/api.requests';
 import { ClimateDetails } from '../../services/services.interface';
 import toFahrenheit from '../../utils/functions/toFahrenheit';
-import { tempUnitToken } from '../../store';
+import { tempUnitToken, climateDetailsToken } from '../../store';
+import { requestByLattAndLong } from '../../services/api.requests';
+import { useLoading } from '../LoadingHook';
 
 interface WeatherContextData {
 	climate: ClimateDetails | null;
 	tempUnit: 'celcius' | 'fahrenheit';
 	getClimate(woeid: number): void;
 	changeTempUnit(unit: WeatherContextData['tempUnit']): void;
-	setClimate: React.Dispatch<React.SetStateAction<ClimateDetails | null>>;
+}
+
+export interface StorageResult {
+	expiration: number;
+	data: ClimateDetails;
 }
 
 const WeatherContext = createContext<WeatherContextData>({} as WeatherContextData);
 
 export const WeatherProvider: React.FC = ({ children }) => {
+	const { setLoading } = useLoading();
 	const [climate, setClimate] = useState<ClimateDetails | null>(null);
 	const [tempUnit, setTempUnit] = useState<WeatherContextData['tempUnit']>(() => {
 		const savedUnit = localStorage.getItem(tempUnitToken) as WeatherContextData['tempUnit'];
@@ -43,23 +50,48 @@ export const WeatherProvider: React.FC = ({ children }) => {
 	}, []);
 
 	const changeTempUnit = useCallback((unit: WeatherContextData['tempUnit']) => {
-		// TODO: Save selected temp unit to localStorage
-
 		localStorage.setItem(tempUnitToken, unit);
 
 		setTempUnit(unit);
 	}, []);
 
+	const storageDataFunction = (result: ClimateDetails): void => {
+		const data: StorageResult = {
+			expiration: Date.now() + 3600,
+			data: result,
+		};
+		localStorage.setItem(climateDetailsToken, JSON.stringify(data));
+	};
+
 	const getClimate = useCallback(
 		async (woeid: number) => {
 			const result = await climateCityDetails(woeid);
+			storageDataFunction(addFahrenheitTemps(result));
 			setClimate(addFahrenheitTemps(result));
 		},
 		[addFahrenheitTemps],
 	);
 
+	useEffect(() => {
+		const getStorageItem = async (): Promise<ClimateDetails | void> => {
+			setLoading(true);
+			const result = localStorage.getItem(climateDetailsToken);
+			const now = Date.now();
+			if (result && now < new Date(JSON.parse(result).expiration).getTime()) {
+				setClimate(JSON.parse(result).data);
+			} else {
+				const nearstCities = await requestByLattAndLong();
+				if (nearstCities.length > 0) {
+					getClimate(nearstCities[0].woeid);
+				}
+			}
+			setLoading(false);
+		};
+		getStorageItem();
+	}, [getClimate, setLoading]);
+
 	return (
-		<WeatherContext.Provider value={{ climate, tempUnit, getClimate, setClimate, changeTempUnit }}>
+		<WeatherContext.Provider value={{ climate, tempUnit, getClimate, changeTempUnit }}>
 			{children}
 		</WeatherContext.Provider>
 	);

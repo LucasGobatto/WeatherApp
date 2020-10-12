@@ -6,8 +6,7 @@ import { Sidebar } from '../Sidebar/styles';
 export { Container } from '../Overview/styles';
 
 export const InitialSidebar = styled(Sidebar)`
-	width: 400px;
-
+	align-items: center;
 	@media only screen and (max-width: 825px) {
 		width: 100%;
 	}

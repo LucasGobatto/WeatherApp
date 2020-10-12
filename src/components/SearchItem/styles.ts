@@ -10,6 +10,10 @@ export const ResultsContainer = styled(Container)`
 	flex-direction: column;
 	justify-content: flex-start;
 	overflow-y: auto;
+
+	@media only screen and (max-width: 825px) {
+		width: 500px;
+	}
 `;
 
 export const Result = styled.button`
